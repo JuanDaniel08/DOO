@@ -1,0 +1,8 @@
+package co.edu.uco.ucobet.entity;
+
+public class Snippet {
+	public static void main(String[] args) {
+		/CrossCutting/src/co/edu/uco/ucobet/dto/CountryDTO.java
+	}
+}
+
