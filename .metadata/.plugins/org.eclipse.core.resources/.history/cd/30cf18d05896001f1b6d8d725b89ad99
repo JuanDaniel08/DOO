@@ -1,0 +1,56 @@
+package co.edu.uco.crosscutting.helpers;
+
+
+public class TextHelper {
+	
+	public static final String EMPTY = "";
+	public static final String ONLY_LETTERS_SPACES = "[A-Za-z]";
+	
+	private TextHelper() {
+		
+	}
+	
+	public static boolean patternIsValid(final String string, final String pattern) {
+		return applyTrim(string).matches("^".concat(pattern).concat("$"));
+	}
+	
+	public static String concat(final String...strings) {
+		var sb = new StringBuilder(EMPTY);
+		
+		for (String string : strings) {
+			sb.append(getDefault(string));
+		}
+		return sb.toString();
+	}
+	
+	public static boolean isNull(final String string) {
+		return ObjectHelper.isNull(string);
+	}
+	
+	public static String getDefault(final String string, final String  defaultValue) {
+		return ObjectHelper.getDefault(string, defaultValue);
+	}
+	
+	public static String getDefault (final String string) {
+		return getDefault(string, EMPTY) ;
+		
+	}
+	
+	public static boolean isEmpty(final String string) {
+		return EMPTY.equals(getDefault(string));
+		
+	}
+	
+	public static boolean isEmptyApplyingTrim(final String string) {
+		return isEmpty(applyTrim(string));
+		
+	}
+	public static String applyTrim (final String string) {
+		return getDefault(string).trim();
+	}
+	
+	public static boolean onlyText(final String string) {
+		return 
+	}
+	
+}

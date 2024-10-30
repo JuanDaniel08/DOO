@@ -1,0 +1,19 @@
+package co.edu.uco.ucobet.businesslogic.facade.city.impl;
+
+import co.edu.uco.ucobet.businesslogic.facade.city.RegisterNewCityFacade;
+import co.edu.uco.ucobet.data.dao.DAOFactory;
+import co.edu.uco.ucobet.data.dao.enums.DAOSource;
+
+public class RegisterNewCityFacadeImpl implements RegisterNewCityFacade{
+
+	@Override
+	public void execute() {
+		// TODO Auto-generated method stub
+		var factory = DAOFactory.getFactory(DAOSource.SQLSERVER);
+	}
+
+	
+
+	
+
+}

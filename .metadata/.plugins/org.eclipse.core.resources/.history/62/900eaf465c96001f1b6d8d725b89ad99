@@ -1,0 +1,42 @@
+package co.edu.uco.ucobet.businesslogic.usecase.state.rules.impl;
+
+import co.edu.uco.crosscutting.helpers.TextHelper;
+import co.edu.uco.ucobet.businesslogic.usecase.state.rules.NameConsistencyIsValid;
+import co.edu.uco.ucobet.crosscutting.exceptions.BusinessLogicUcoBetException;
+import co.edu.uco.ucobet.crosscutting.exceptions.DataUcoBetException;
+
+public class CityNameConsistencyIsValidImpl implements NameConsistencyIsValid {
+
+	@Override
+	public void execute(String data) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	private void validateLen(final String data) {
+		if (!TextHelper.maxLenIsValid(data,50)) {
+			var userMenssage = "Se a presentado un problema inesperado tratando de llevar a cabo el registro de la información de un nuevo país. Por favor intente de nuevo, y si el problema persiste reporte la novedad...";
+			var technicalMessage="Se a presentado un problema al tratar de registrar la información del nuevo país en la base de datos SQL Server. Por favor valide el log de errores para encontrar mayores detalles del problema presentado...";
+
+			throw BusinessLogicUcoBetException.crear(userMenssage);
+		}
+	}
+	
+	private void validateFormat(final String data) {
+		if (!TextHelper.containsOnlyLettersAndSpaces(data)) {
+			var userMenssage = "Se a presentado un problema inesperado tratando de llevar a cabo el registro de la información de un nuevo país. Por favor intente de nuevo, y si el problema persiste reporte la novedad...";
+			var technicalMessage="Se a presentado un problema al tratar de registrar la información del nuevo país en la base de datos SQL Server. Por favor valide el log de errores para encontrar mayores detalles del problema presentado...";
+
+			throw BusinessLogicUcoBetException.crear(userMenssage);
+		}
+	}
+	private void validateNotNull(final String data) {
+		if (!TextHelper.isEmpty(data)) {
+			var userMenssage = "Se a presentado un problema inesperado tratando de llevar a cabo el registro de la información de un nuevo país. Por favor intente de nuevo, y si el problema persiste reporte la novedad...";
+			var technicalMessage="Se a presentado un problema al tratar de registrar la información del nuevo país en la base de datos SQL Server. Por favor valide el log de errores para encontrar mayores detalles del problema presentado...";
+
+			throw BusinessLogicUcoBetException.crear(userMenssage);
+		}
+	}
+	
+}

@@ -1,14 +1,58 @@
 package co.edu.uco.ucobet.businesslogic.usecase.city.impl;
 
+import java.util.UUID;
+
+import co.edu.uco.crosscutting.helpers.ObjectHelper;
+import co.edu.uco.crosscutting.helpers.UUIDHelper;
+import co.edu.uco.ucobet.businesslogic.adapter.entity.CityEntityAdapter;
 import co.edu.uco.ucobet.businesslogic.usecase.city.RegisterNewCity;
+import co.edu.uco.ucobet.businesslogic.usecase.city.rules.CityNameDoesNotExistsForState;
+import co.edu.uco.ucobet.businesslogic.usecase.city.rules.impl.CityNameDoesNotExistsForStateImpl;
+import co.edu.uco.ucobet.businesslogic.usecase.state.rules.StateExists;
+import co.edu.uco.ucobet.businesslogic.usecase.state.rules.impl.StateExistsImpl;
+import co.edu.uco.ucobet.data.dao.DAOFactory;
 import co.edu.uco.ucobet.domain.CityDomain;
 
 public final class RegisterNewCityImpl implements RegisterNewCity{
 
+	private DAOFactory daoFactory;
+	private CityNameDoesNotExistsForState cityNameDoesNotExistsForState = new CityNameDoesNotExistsForStateImpl();
+	private StateExists stateExists = new StateExistsImpl();
+	
+	public RegisterNewCityImpl(final DAOFactory daoFactory) {
+		setDaoFactory(daoFactory);
+	}
+	
 	@Override
 	public void execute(CityDomain data) {
-		// TODO Auto-generated method stub
 		
+		cityNameConsistencyIsValid.execute(data.getName());
+		cityNameDoseNotExistsForState.execute(data.getName());
+		stateExists.execute(data.getName());
+		
+		cityNameDoesNotExistsForState.execute(data, daoFactory);
+		stateExists.execute(data.getState().getId(), daoFactory);
+		
+		var cityDomainToMap= CityDomain.create(generateId(), data.getName(), data.getState());
+		var cityEntity = CityEntityAdapter.getCityEntityAdapter().adaptTarget(data);
+		daoFactory.getCityDAO().update(cityEntity);
 	}
-
+	
+	private UUID generateId() {
+		var id = UUIDHelper.generate();
+		var cityEntity = daoFactory.getCityDAO().findByID(id);
+		
+		if(UUIDHelper.isEqual(cityEntity.getId(), id)) {
+			id = generateId();
+		}
+		return id;
+	}
+	
+	private void setDaoFactory(final DAOFactory daoFactory) {
+		if(ObjectHelper.isNull(daoFactory)) {
+			
+		}
+		
+		this.daoFactory= daoFactory;
+	}
 }
